@@ -23,7 +23,7 @@ for my $c (@cookies) {
     # carp 'Cookies: ' . $c;	
 }
 
-carp 'Resp: ' . $resp->status_line;
+carp 'Resp: ' . $resp->status_line if ($resp->code() != 302);
 my @aClassList = ('ClassList', '0,39196,39269,39270,39271');
 my @aSchedules = ('Schedules', "'','Custom','Flex','Fridays+Only','Full+Week+M-F','Mondays+Only','Three+Days+per+Week+MWF','Thursdays+Only','Tuesdays+Only','Two+Days+per+Week+TTh','Wednesdays+Only'");
     
@@ -91,7 +91,8 @@ my $reports = {
 	    @aClassList,
 	    @aSchedules,
 	    IncludeImages => 'false',
-	}
+	},
+	upload => '472cd01a-dc2f-44df-ba6e-603b1bc40ddd',
     },
     ChildRoster => {
 	data => {
@@ -193,7 +194,15 @@ for my $rep (keys %$reports) {
     }
     if ($resp) {
 	carp "$rep: ".$resp->status_line;
-	carp Dumper($resp) if ($resp->code() != 200);
+	if ($resp->code() == 200) {
+	    # upload it
+	    if (my $target=$reports->{$rep}{upload}) {
+		my $a = `scp $fname thousandpines\@tmcamping.import.domo.com:$target`;
+		carp "Upload failed to $target\n$a" if $?;
+	    }
+	} else {
+	    carp Dumper($resp);
+	}
     } else {
 	carp "No report run for $rep"
     }
