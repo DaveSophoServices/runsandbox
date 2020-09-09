@@ -37,54 +37,65 @@ my $endDate = "EndDate=$today";
 my $startEnd = "$startDate&$endDate";
 
 my $reports = {
-    AttendanceSummary => {
-	args => "$startEnd&$classList",
-	upload => '02668b13-a6d9-4700-956c-51bc0465f8a2',
-    },
     AllergyReport => {
 	args => "$asOf&IncludeMedical=true&$classList",
+	desc => 'The allergy list is a list of all children with allergies with one page per class.',
     },
     AllergyReportDetailed => {
 	args => "$asOf&$classList",
+	desc => 'The allergy list is a list of all children with allergies including the parents contact information.'
     },
     AllergyReportCombined => {
 	args => "$asOf&Includemedical=true&$classList",
+	desc => 'The allergy list is a list of all children with allergies combined for all classes.',	
     },
     AllergyReportLandscape => {
 	args => "$asOf&$classList",
+	desc => 'The allergy list is a list of all children with allergies with one page per class.'
     },
     AllergyReportLandscapeCombined => {
 	args => "$asOf&$classList",
+	desc => 'The allergy list is a list of all children with allergies combined for all classes.'
     },
     AllergyReportLandscapeWithRequirements => {
 	args => "$asOf&$classList",
+	desc => 'The Allergy list is a list of all children with allergies, medical conditions, or Requirements.',
     },
     EmergencyCardReport => {
 	args => "$asOf&Condensed=true&$classList",
+	desc => 'The emergency card is a list of all children\'s emergency contact informations',
     },
     EnrollmentReport => {
 	args => "$asOf&$classList&OrderBy=alphabetical&GroupBy=class",
+	desc => 'This is a list of the new enrollment for the classes',
     },
     BirthdayReport => {
 	args => "$startEnd&$classList&AllBirthdays=true",
+	desc => 'The Birthday Report is a list of all enrolled children that have a birthday within the selected date range.',
     },
     WithdrawalReport => {
 	args => "$startEnd&$classList",
+	desc => 'This is a list of the Withdrawals for the classes',
     },
     WaitlistReport => {
 	args => "OrderBy=lastname&$classList",
+	desc => 'This is a list of the children on waiting list for the classes',
     },
     ChildrenImmunizationsReport => {
 	args => "$asOf&$classList",
+	desc => 'This is a list of the children\'s Immunization informations for the classes',
     },
     WeeklyMedicationReport => {
 	args => "$classList",
+	desc => 'This is a list of the children\'s Weekly Medication informations for the classes',
     },
     ParentInfoList => {
 	args => "$asOf&$classList",
+	desc => 'This is a list of the children\'s Parents and Guardians\' information for the classes',
     },
     ParentPortalAdoption => {
 	args => "",
+	desc => 'A report of how many parents have successfully signed up for Parent Portal',
     },
     ChildList => {
 	data => {
@@ -94,6 +105,7 @@ my $reports = {
 	    @aSchedules,
 	    IncludeImages => 'false',
 	},
+	desc => 'This is a list of the children\'s information for the classes selected',
 	upload => '472cd01a-dc2f-44df-ba6e-603b1bc40ddd',
     },
     ChildRoster => {
@@ -103,83 +115,115 @@ my $reports = {
 	    @aClassList,
 	    @aSchedules,
 	},
+	desc => 'This is a list of the children\'s information for the classes selected',
     },
-    ChildMinderReport => { # needs reminders to be setup
+    ChildReminderReport => { # needs reminders to be setup
+	desc => 'The Child Reminder Report is a list of outstanding or complete reminders',
     },
     StaffTrackingReport => { # needs reminders, tasks to be setup
+	desc => 'The Staff Tracking Report is a list of outstanding or complete staff reminders',
     },
     PickupList => {
 	args => "$asOf&$classList",
+	desc => 'This is a list of each child\'s authorized pickups for the classes selected',
     },
     ChildTagsReports => { # needs child tags to be setup
+	desc => 'This is a list children and their associated tags',
     },
     ActivityReport => { # needs activities setup
+	desc => 'This is a list of the activity report for camps',
     },
     ChildActivityReport => {
 	args => "$asOf&$classList",
+	desc => 'This is a daily log of the activities/checklist for each child',
     },
     SummerCampEnrollmentReport => {
 	# needs kids to be enrolled at this location
+	desc => 'This is the Summer Camp Enrollment Report',
     },
     StaffEmergencyCard => {
 	# doesn't run. Probably need something setup with staff
+	desc => '',
     },
     StaffList => {
 	# need to add staff to get this report
 	# args => "$asOf"
+	desc => 'This is a list of the Staffs\' information for the classes selected',
     },
     StaffHoursDetail => {
 	# need staff
+	desc => 'This is a detailed list of all staff hours for the selected time period',
     },
     StaffTimesheet => {
 	# need staff
+	desc => 'The staff Timesheet is a list of all staff\'s Hours for the given period',
     },
     RequirementsReport => {
 	args => "$asOf&$classList",
+	desc => 'The Requirements Report is a list of all children with requirements with one page per class.',
     },
     TimeclockPassCodeReport => {
 	args => "",
+	desc => 'A Report of all guardian and emergency contact timeclock pass codes',
     },
     
     ## Attendance Reports
     AttendanceSummary => {
 	args => "$startEnd&$classList",
+	desc => 'This is the Attendance Summary',
+	upload => '02668b13-a6d9-4700-956c-51bc0465f8a2',
     },
     DailyAttendanceReport => {
 	args => "$asOf&$classList",
+	desc => 'This is the Daily Attendance Sheet',
     },
     DailyAttendanceProjectionReport => {
 	args => "$asOf&$classList",
+	desc => 'This is the Daily Attendance Sheet with only scheduled children appearing on the report',
     },
     DailyAttendanceFirstName => {
 	args => "$asOf&$classList",
+	desc => 'This is the Daily Attendance Sheet with the first name and initial showing on the report',
     },
     DailyAttendanceSheetSignature => {
 	args => "$asOf&$classList",
+	desc => 'This is the Daily Attendance Sheet with Signature and Non-Scheduled Children greyed out',
+    },
+    DailyAttendanceSignatureAll => {
+	args => "$asOf&$classList&GroupByClass=true",
+	desc => 'This is the Daily Attendance Sheet with Signature',
     },
     DailyAttendanceSignature => {
 	args => "$asOf&$classList&GroupByClass=true",
+	desc => 'This is the Daily Attendance Sheet with Signature with only scheduled children appearing on the report',
     },
     DailyAttendanceHealthCheck => {
 	args => "$asOf&$classList",
+	desc => 'This is the Daily Attendance Sheet with the ability to enter health check information',
     },
     DailyAttendanceReportHours => {
 	args => "$startEnd&$classList",
+	desc => 'This is the Daily Attendance Report with Times',
     },
     WeeklyAttendanceReport => {
 	args => "$asOf&$classList",
+	desc => 'This is the Weekly Attendance Report',
     },
     WeeklyAttendanceReportDouble => {
 	args => "$asOf&$classList",
+	desc => 'This is the Weekly Attendance Report Double',
     },
     WeeklyAttendanceReportTriple => {
 	args => "$asOf&$classList",
+	desc => 'This is the Weekly Attendance Report Triple',
     },
     WeeklyAttendanceProjectionReport => {
 	args => "$asOf&$classList",
+	desc => 'This is the weekly attendance projection report',
     },
     WeeklyAttendanceProjectionReportDouble => {
 	args=> "$asOf&classList",
+	desc => 'This is the weekly attendace projection report with double.',
     },
     WeeklyAttendanceHoursReport => {
 	args=> "$asOf&classList",
