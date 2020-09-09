@@ -27,10 +27,10 @@ carp 'Resp: ' . $resp->status_line if ($resp->code() != 302);
 my @aClassList = ('ClassList', '0,39196,39269,39270,39271');
 my @aSchedules = ('Schedules', "'','Custom','Flex','Fridays+Only','Full+Week+M-F','Mondays+Only','Three+Days+per+Week+MWF','Thursdays+Only','Tuesdays+Only','Two+Days+per+Week+TTh','Wednesdays+Only'");
     
-my $today = '9/7/2020';
+my $today = '9/9/2020';
 my $start = '8/1/2020';
 
-my $classList = join(@aClassList, '=');
+my $classList = join('=',@aClassList);
 my $asOf = "AsOfDate=$today";
 my $startDate = "StartDate=$start";
 my $endDate = "EndDate=$today";
@@ -40,62 +40,80 @@ my $reports = {
     AllergyReport => {
 	args => "$asOf&IncludeMedical=true&$classList",
 	desc => 'The allergy list is a list of all children with allergies with one page per class.',
+	upload => 'aec710d2-3639-4c3b-918c-fbe1eebc4911',
     },
     AllergyReportDetailed => {
 	args => "$asOf&$classList",
-	desc => 'The allergy list is a list of all children with allergies including the parents contact information.'
+	desc => 'The allergy list is a list of all children with allergies including the parents contact information.',
+	upload => '1100b738-e454-4ed5-83c3-d494667c31a3',
     },
     AllergyReportCombined => {
 	args => "$asOf&Includemedical=true&$classList",
-	desc => 'The allergy list is a list of all children with allergies combined for all classes.',	
+	desc => 'The allergy list is a list of all children with allergies combined for all classes.',
+	upload => '1198ea89-22f9-493a-a915-2c3da568025a',
     },
     AllergyReportLandscape => {
 	args => "$asOf&$classList",
-	desc => 'The allergy list is a list of all children with allergies with one page per class.'
+	desc => 'The allergy list is a list of all children with allergies with one page per class.',
+	upload => '33982376-a49f-4a8a-b069-0aac2879f09d',
     },
     AllergyReportLandscapeCombined => {
 	args => "$asOf&$classList",
-	desc => 'The allergy list is a list of all children with allergies combined for all classes.'
+	desc => 'The allergy list is a list of all children with allergies combined for all classes.',
+	upload => '6a986b57-3e0b-4f18-aae1-acd452dbdeac',
     },
     AllergyReportLandscapeWithRequirements => {
 	args => "$asOf&$classList",
 	desc => 'The Allergy list is a list of all children with allergies, medical conditions, or Requirements.',
+	upload => '43c5db80-ec65-4308-9243-a82ab7e69550',
+	
     },
     EmergencyCardReport => {
 	args => "$asOf&Condensed=true&$classList",
-	desc => 'The emergency card is a list of all children\'s emergency contact informations',
+	desc => q/The emergency card is a list of all children's emergency contact informations/,
+	upload => '3ddfc135-6c4b-4474-80d8-bf097201fa2a',
+	
     },
     EnrollmentReport => {
 	args => "$asOf&$classList&OrderBy=alphabetical&GroupBy=class",
 	desc => 'This is a list of the new enrollment for the classes',
+	upload => 'b141c070-792e-4899-8058-6b7f7ef0c1f9',
     },
     BirthdayReport => {
 	args => "$startEnd&$classList&AllBirthdays=true",
 	desc => 'The Birthday Report is a list of all enrolled children that have a birthday within the selected date range.',
+	upload => '1e063d3c-58bd-4ddc-aea0-6588f29db173',
     },
     WithdrawalReport => {
 	args => "$startEnd&$classList",
 	desc => 'This is a list of the Withdrawals for the classes',
+	upload => 'e2698adf-ca64-494c-8f81-64f88d41f4e6',
     },
     WaitlistReport => {
 	args => "OrderBy=lastname&$classList",
 	desc => 'This is a list of the children on waiting list for the classes',
+	upload => 'b5a99431-c607-477e-8913-e062f4540b93',
     },
     ChildrenImmunizationsReport => {
 	args => "$asOf&$classList",
-	desc => 'This is a list of the children\'s Immunization informations for the classes',
+	desc => q/This is a list of the children's Immunization informations for the classes/,
+	upload => '9ecf7572-6620-425f-a98b-d2b7be7fc80b',
     },
     WeeklyMedicationReport => {
 	args => "$classList",
-	desc => 'This is a list of the children\'s Weekly Medication informations for the classes',
+	desc => q/This is a list of the children's Weekly Medication informations for the classes/,
+	upload => '3bb5b72b-c38a-4c6f-9a79-2994d658a73e',
+	
     },
     ParentInfoList => {
 	args => "$asOf&$classList",
-	desc => 'This is a list of the children\'s Parents and Guardians\' information for the classes',
+	desc => q/This is a list of the children's Parents and Guardians' information for the classes/,
+	upload => '7a4ba3f8-5331-4be6-9f01-fed7285bb7be',
     },
     ParentPortalAdoption => {
 	args => "",
 	desc => 'A report of how many parents have successfully signed up for Parent Portal',
+	upload => '38bab3c9-83af-4fc5-b9cf-9168df6f3fbf',
     },
     ChildList => {
 	data => {
@@ -105,7 +123,7 @@ my $reports = {
 	    @aSchedules,
 	    IncludeImages => 'false',
 	},
-	desc => 'This is a list of the children\'s information for the classes selected',
+	desc => q/This is a list of the children's information for the classes selected/,
 	upload => '472cd01a-dc2f-44df-ba6e-603b1bc40ddd',
     },
     ChildRoster => {
@@ -115,7 +133,8 @@ my $reports = {
 	    @aClassList,
 	    @aSchedules,
 	},
-	desc => 'This is a list of the children\'s information for the classes selected',
+	desc => q/This is a list of the children's information for the classes selected/,
+	upload => 'f70926e6-0632-442a-b1a5-b53aff5c8964',
     },
     ChildReminderReport => { # needs reminders to be setup
 	desc => 'The Child Reminder Report is a list of outstanding or complete reminders',
@@ -125,7 +144,9 @@ my $reports = {
     },
     PickupList => {
 	args => "$asOf&$classList",
-	desc => 'This is a list of each child\'s authorized pickups for the classes selected',
+	desc => q/This is a list of each child's authorized pickups for the classes selected/,
+	upload => 'af7ed067-7299-4c96-8b70-efed03e4a9ef',
+	
     },
     ChildTagsReports => { # needs child tags to be setup
 	desc => 'This is a list children and their associated tags',
@@ -136,6 +157,7 @@ my $reports = {
     ChildActivityReport => {
 	args => "$asOf&$classList",
 	desc => 'This is a daily log of the activities/checklist for each child',
+	upload => 'f023ea8e-4864-4572-9cd2-bd22da50c30a',
     },
     SummerCampEnrollmentReport => {
 	# needs kids to be enrolled at this location
@@ -161,10 +183,12 @@ my $reports = {
     RequirementsReport => {
 	args => "$asOf&$classList",
 	desc => 'The Requirements Report is a list of all children with requirements with one page per class.',
+	upload => '262ccfa2-1d2b-4975-9c15-0f0bb263078a',
     },
     TimeclockPassCodeReport => {
 	args => "",
 	desc => 'A Report of all guardian and emergency contact timeclock pass codes',
+	upload => 'f788c7b3-9e53-4d0f-ae44-db8e85a02587',
     },
     
     ## Attendance Reports
@@ -176,50 +200,62 @@ my $reports = {
     DailyAttendanceReport => {
 	args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet',
+	upload => 'e18b6f3c-bca6-407a-8718-64acffb9ce51',
     },
     DailyAttendanceProjectionReport => {
 	args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet with only scheduled children appearing on the report',
+	upload => 'ee7789f1-a9b1-4bab-9f83-1ab9e000b689',
     },
     DailyAttendanceFirstName => {
 	args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet with the first name and initial showing on the report',
+	upload => '242d25f7-f0cc-4ed6-a0d7-0917422fcb93',
     },
     DailyAttendanceSheetSignature => {
 	args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet with Signature and Non-Scheduled Children greyed out',
+	upload => 'eea2ea51-e808-481d-adae-aea0cd09c02a',
     },
     DailyAttendanceSignatureAll => {
 	args => "$asOf&$classList&GroupByClass=true",
 	desc => 'This is the Daily Attendance Sheet with Signature',
+	upload => '5399ef83-6994-4fd7-ab4b-e472e0b255cd',
     },
     DailyAttendanceSignature => {
 	args => "$asOf&$classList&GroupByClass=true",
 	desc => 'This is the Daily Attendance Sheet with Signature with only scheduled children appearing on the report',
+	upload => 'd7215639-20dd-40cc-bcff-2dda51f2fee7',
     },
     DailyAttendanceHealthCheck => {
 	args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet with the ability to enter health check information',
+	upload => '649180fe-1c10-4df3-962c-01df107d0470',
     },
     DailyAttendanceReportHours => {
 	args => "$startEnd&$classList",
 	desc => 'This is the Daily Attendance Report with Times',
+	upload => '2b655e03-d035-4ade-bcae-9e7cd3469322',
     },
     WeeklyAttendanceReport => {
 	args => "$asOf&$classList",
 	desc => 'This is the Weekly Attendance Report',
+	upload => 'ad7fc665-c303-4cdc-b6d6-ac83758e443c',
     },
     WeeklyAttendanceReportDouble => {
 	args => "$asOf&$classList",
 	desc => 'This is the Weekly Attendance Report Double',
+	upload => 'a4afc770-7751-4b16-93b7-2870db9a24b8',
     },
     WeeklyAttendanceReportTriple => {
 	args => "$asOf&$classList",
 	desc => 'This is the Weekly Attendance Report Triple',
+	upload => 'fbcc2a2e-55a5-4169-9ca0-75e6258a61ab',
     },
     WeeklyAttendanceProjectionReport => {
 	args => "$asOf&$classList",
 	desc => 'This is the weekly attendance projection report',
+	upload => '824eed33-80ea-4a71-b2b2-c548fa20059f',
     },
     WeeklyAttendanceProjectionReportDouble => {
 	args=> "$asOf&classList",
@@ -532,7 +568,8 @@ for my $rep (keys %$reports) {
 		carp "Upload failed to $target\n$a" if $?;
 	    }
 	} else {
-	    #carp Dumper($resp);
+#	    carp "Failed URL: ".$resp->
+	    carp Dumper($resp);
 	}
     } else {
 	carp "No report run for $rep"
