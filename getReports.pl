@@ -5,6 +5,9 @@ use Carp;
 use Data::Dumper;
 
 use LWP::UserAgent qw();
+use URI::Encode qw(uri_encode);
+
+use Time::Piece;
 
 my $ua = LWP::UserAgent->new();
 
@@ -26,8 +29,8 @@ for my $c (@cookies) {
 carp 'Resp: ' . $resp->status_line if ($resp->code() != 302);
 my @aClassList = ('ClassList', '0,39196,39269,39270,39271');
 my @aSchedules = ('Schedules', "'','Custom','Flex','Fridays+Only','Full+Week+M-F','Mondays+Only','Three+Days+per+Week+MWF','Thursdays+Only','Tuesdays+Only','Two+Days+per+Week+TTh','Wednesdays+Only'");
-    
-my $today = '9/9/2020';
+
+my $today = localtime->mdy("/");
 my $start = '8/1/2020';
 
 my $classList = join('=',@aClassList);
@@ -69,10 +72,10 @@ my $reports = {
 	
     },
     EmergencyCardReport => {
+	# not an easy XLS to take care of
 	args => "$asOf&Condensed=true&$classList",
 	desc => q/The emergency card is a list of all children's emergency contact informations/,
 	upload => '3ddfc135-6c4b-4474-80d8-bf097201fa2a',
-	
     },
     EnrollmentReport => {
 	args => "$asOf&$classList&OrderBy=alphabetical&GroupBy=class",
@@ -95,11 +98,13 @@ my $reports = {
 	upload => 'b5a99431-c607-477e-8913-e062f4540b93',
     },
     ChildrenImmunizationsReport => {
+	# not a straight list of values. More of a report card
 	args => "$asOf&$classList",
 	desc => q/This is a list of the children's Immunization informations for the classes/,
 	upload => '9ecf7572-6620-425f-a98b-d2b7be7fc80b',
     },
     WeeklyMedicationReport => {
+	# not a straight list of values.
 	args => "$classList",
 	desc => q/This is a list of the children's Weekly Medication informations for the classes/,
 	upload => '3bb5b72b-c38a-4c6f-9a79-2994d658a73e',
@@ -111,7 +116,8 @@ my $reports = {
 	upload => '7a4ba3f8-5331-4be6-9f01-fed7285bb7be',
     },
     ParentPortalAdoption => {
-	args => "",
+	# requires a different method of loading this one
+	#args => "",
 	desc => 'A report of how many parents have successfully signed up for Parent Portal',
 	upload => '38bab3c9-83af-4fc5-b9cf-9168df6f3fbf',
     },
@@ -155,7 +161,8 @@ my $reports = {
 	desc => 'This is a list of the activity report for camps',
     },
     ChildActivityReport => {
-	args => "$asOf&$classList",
+	# No daily activities setup
+	#args => "$asOf&$classList",
 	desc => 'This is a daily log of the activities/checklist for each child',
 	upload => 'f023ea8e-4864-4572-9cd2-bd22da50c30a',
     },
@@ -538,12 +545,28 @@ my $reports = {
 # Convert ARGV into a hashmap of reports to run. If it's empty, we run all reports
 my %reps_to_run = map { $_ => 1 } @ARGV;
 
+my $debug = 0;
+if ($reps_to_run{debug}) {
+    $debug = 1;
+    delete $reps_to_run{debug};
+}
+
+$ua->add_handler(request_send => sub {
+    my ($request, $ua, $handler) = @_;
+    # LWP isn't encoding the content in a way that works with sandbox
+    $request->{_content} =~ s/\'/%27/g;
+    $request->{_content} =~ s/%2B/+/g;
+    $request->{_headers}{'content-length'}=length($request->{'_content'});    
+    #print Dumper($request);
+    return;
+		 });
+
 for my $rep (keys %$reports) {
     # if reps_to_run is populated but the report we're about to run isn't in it
     # then we go to the next report
     if (%reps_to_run && !$reps_to_run{$rep}) {
 	next;
-    }
+    } 
     
     my $fname = 'data/'.lc($rep).".xls";
     my $resp;
@@ -554,6 +577,7 @@ for my $rep (keys %$reports) {
 			  ':content_file' => $fname,
 			  Cookie=>$authCookie,
 	    );
+	carp Dumper($resp->request) if ($debug);
     } elsif (defined($reports->{$rep}{args})) {
 	$resp = $ua->get("https://go.runsandbox.com/Report/$rep?format=xls&".$reports->{$rep}{args},
 			 Cookie=>$authCookie,
@@ -566,10 +590,14 @@ for my $rep (keys %$reports) {
 	    if (my $target=$reports->{$rep}{upload}) {
 		my $a = `scp $fname thousandpines\@tmcamping.import.domo.com:$target`;
 		carp "Upload failed to $target\n$a" if $?;
+		carp $a if $debug && $a;
 	    }
 	} else {
-#	    carp "Failed URL: ".$resp->
-	    carp Dumper($resp);
+	    if (!$debug) {
+		carp "Failed URL: ".$resp->request->uri;
+	    } else {
+		carp Dumper($resp->request);
+	    }
 	}
     } else {
 	carp "No report run for $rep"
