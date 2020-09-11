@@ -200,62 +200,72 @@ my $reports = {
     
     ## Attendance Reports
     AttendanceSummary => {
-	args => "$startEnd&$classList",
+	#args => "$startEnd&$classList",
 	desc => 'This is the Attendance Summary',
 	upload => '02668b13-a6d9-4700-956c-51bc0465f8a2',
     },
     DailyAttendanceReport => {
-	args => "$asOf&$classList",
+	# Sheet
+	#args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet',
 	upload => 'e18b6f3c-bca6-407a-8718-64acffb9ce51',
     },
     DailyAttendanceProjectionReport => {
-	args => "$asOf&$classList",
+	# Sheet
+	#args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet with only scheduled children appearing on the report',
 	upload => 'ee7789f1-a9b1-4bab-9f83-1ab9e000b689',
     },
     DailyAttendanceFirstName => {
-	args => "$asOf&$classList",
+	# Sheet
+	#args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet with the first name and initial showing on the report',
 	upload => '242d25f7-f0cc-4ed6-a0d7-0917422fcb93',
     },
     DailyAttendanceSheetSignature => {
-	args => "$asOf&$classList",
+	# Sheet
+	#args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet with Signature and Non-Scheduled Children greyed out',
 	upload => 'eea2ea51-e808-481d-adae-aea0cd09c02a',
     },
     DailyAttendanceSignatureAll => {
-	args => "$asOf&$classList&GroupByClass=true",
+	# Sheet
+	#args => "$asOf&$classList&GroupByClass=true",
 	desc => 'This is the Daily Attendance Sheet with Signature',
 	upload => '5399ef83-6994-4fd7-ab4b-e472e0b255cd',
     },
     DailyAttendanceSignature => {
-	args => "$asOf&$classList&GroupByClass=true",
+	# Sheet
+	#args => "$asOf&$classList&GroupByClass=true",
 	desc => 'This is the Daily Attendance Sheet with Signature with only scheduled children appearing on the report',
 	upload => 'd7215639-20dd-40cc-bcff-2dda51f2fee7',
     },
     DailyAttendanceHealthCheck => {
-	args => "$asOf&$classList",
+	# Sheet
+ 	#args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet with the ability to enter health check information',
 	upload => '649180fe-1c10-4df3-962c-01df107d0470',
     },
-    DailyAttendanceReportHours => {
+    DailyAttendanceReportHours => {	
 	args => "$startEnd&$classList",
 	desc => 'This is the Daily Attendance Report with Times',
 	upload => '2b655e03-d035-4ade-bcae-9e7cd3469322',
     },
     WeeklyAttendanceReport => {
-	args => "$asOf&$classList",
+	# Sheet
+	#args => "$asOf&$classList",
 	desc => 'This is the Weekly Attendance Report',
 	upload => 'ad7fc665-c303-4cdc-b6d6-ac83758e443c',
     },
     WeeklyAttendanceReportDouble => {
-	args => "$asOf&$classList",
+	# Sheet
+	#args => "$asOf&$classList",
 	desc => 'This is the Weekly Attendance Report Double',
 	upload => 'a4afc770-7751-4b16-93b7-2870db9a24b8',
     },
     WeeklyAttendanceReportTriple => {
-	args => "$asOf&$classList",
+	# Sheet
+	#args => "$asOf&$classList",
 	desc => 'This is the Weekly Attendance Report Triple',
 	upload => 'fbcc2a2e-55a5-4169-9ca0-75e6258a61ab',
     },
@@ -265,79 +275,99 @@ my $reports = {
 	upload => '824eed33-80ea-4a71-b2b2-c548fa20059f',
     },
     WeeklyAttendanceProjectionReportDouble => {
-	args=> "$asOf&classList",
+	# Sheet
+	#args=> "$asOf&$classList",
 	desc => 'This is the weekly attendace projection report with double.',
     },
     WeeklyAttendanceHoursReport => {
-	args=> "$asOf&classList",
+	args=> "$asOf&$classList",
 	desc=> 'This is the weekly attendance projection report with times',
+	upload => '0da02f00-ef43-42db-8e35-1f08064f87af',
     },
     WeeklySignInSheet => {
-	args=> "$asOf&classList",
+	# Sheet
+	#args=> "$asOf&classList",
 	desc=> 'This is the weekly sign in/out sheet',
     },
     WeeklySignInSheetAMPM => {
-	args=> "$asOf&$classList&Orderby=lastname",
+	# Sheet
+	#args=> "$asOf&$classList&Orderby=lastname",
 	desc=> 'This is the weekly sign in/out sheet for AM and PM',
     },
     WeeklySignInOutSheetWithSignature => {
-	args=> "$asOf&$classList&Orderby=lastname",
+	# Sheet
+	#args=> "$asOf&$classList&Orderby=lastname",
 	desc=> 'This is the weekly sign in/out sheet with full signature',
     },
     WeeklySignInOutSheetAMPMWithSignature => {
-	args=> "$asOf&$classList&Orderby=lastname",
+	# Sheet
+	#args=> "$asOf&$classList&Orderby=lastname",
 	desc=> 'This is the weekly sign in/out sheet with full signature',
     },
     WeeklySignInSheetAMPMHC => {
-	args=> "$asOf&$classList&Orderby=lastname",
+	# Sheet
+	#args=> "$asOf&$classList&Orderby=lastname",
 	desc=> 'This is the weekly sign in/out sheet for AM and PM with Health Check',
     },
     WeeklySignInOnly => {
-	args=> "$asOf&$classList",
+	# Sheet
+	#args=> "$asOf&$classList",
 	desc=> 'This is the weekly sign in sheet',
     },
     WeeklySignOutOnly => {
-	args=> "$asOf&$classList",
+	# Sheet
+	#args=> "$asOf&$classList",
 	desc=> 'This is the weekly sign out sheet',
     },
     WeeklyAttendanceReportWithHealthCheck => {
-	args=> "$asOf&$classList",
+	# Sheet
+	#args=> "$asOf&$classList",
 	desc=> 'This is the Weekly Attendance Report With Health Check',
     },
     WeeklyAttendanceAMPM => {
-	args=> "$asOf&$classList",
+	# Sheet
+	#args=> "$asOf&$classList",
 	desc=> 'This is the Weekly Attendance Report With AM/PM',
     },
     SemiMonthlyAttendance => {
-	args=> "$startEnd&$classList&AllEnrolled=true",
+	# Sheet
+	#args=> "$startEnd&$classList&AllEnrolled=true",
 	desc=> 'This is the semi-monthly attendance sheet with projections',
     },
     SemiMonthlyAttendanceBandA => {
-	args=> "$startEnd&$classList&AllEnrolled=true",
+	# Sheet
+	#args=> "$startEnd&$classList&AllEnrolled=true",
 	desc=> 'This is the semi-monthly attendance sheet with projections for Before and After School',
     },
     MonthlyAttendanceReport => {
 	args=> "$asOf&$classList&Orderby=class",
 	desc=> 'This is the monthly attendance report',
+	upload => 'fdf17200-275e-4579-97a1-d719d82e0bae',
     },
     MonthlyAttendanceSubmissionReport => {
 	args=> "$asOf&$classList&IncludeSubsidizedChildren=true&IncludeUnsubsidizedChildren=true&Orderby=class",
 	desc=> 'This is the monthly attendance submission report',
+	upload=> '363b67cf-19bd-42ba-9516-8f11597d3f3c',
     },
     MonthlyAttendanceWithDropoffPickup => {
 	args=> "$startEnd&$classList",
 	desc=> 'This is a detailed list of all attendance with the name of the dropoff/pickup for the selected classes and time period',
+	upload => '3657f13e-e907-45a4-985b-7dd04f222f2b',
+	
     },
     MonthlyAttendanceProjectionsReport => {
 	args=> "$asOf&$classList",
 	desc=> 'This is the monthly attendance sheet with projections',
+	upload => '51a82cc3-01fc-40ae-9ad8-7cfa91681457',
     },
     MonthlyAttendanceHealthCheck => {
-	args=> "$asOf&$classList",
+	# Sheet
+	#args=> "$asOf&$classList",
 	desc=> 'This is the monthly attendance sheet with health check',
     },
     MonthlyAttendanceFiveWeeks => {
-	args=> "$asOf&Orderby=class&$classList",
+	# Sheet
+	#args=> "$asOf&Orderby=class&$classList",
 	desc=> 'This is the monthly attendance sheet with five weeks showing',
     },
     WeeklySummerCamp => {
@@ -357,18 +387,22 @@ my $reports = {
     MonthlyProjectionReport => {
 	args=> "$asOf&$classList",
 	desc=> 'This is the monthly projection report',
+	upload => 'ace8bcbf-34a4-4bb4-8867-49a979224690',
     },
     WeeklyProjectionReport => {
 	args=> "$asOf&$classList",
 	desc=> 'This is the weekly projection report',
+	upload => '2d54489e-deb2-446e-b537-f7c66e4322f5',
     },
     WeeklyScheduledTimesReport => {
 	args=> "$asOf&$classList",
 	desc=> 'This is the Weekly Projection Report With Times',
+	upload => '3698c993-71cb-4998-941e-01e75bacd912',
     },
     WeeklyProjectionSummaryReport => {
 	args=> "$asOf",
 	desc=> 'This is the weekly projection summary report',
+	upload => '7e0dde89-c4b1-4bd9-9dee-f1319106424f',
     },
     CampProjection => {
 	# need to have kids enrolled in camp
@@ -383,6 +417,7 @@ my $reports = {
 	    @aSchedules,	    
 	},
 	desc=> 'This is the annual fee summary report',
+	upload => 'd912be86-76fb-4bb8-a7d3-ab482a3b1a34',
     },
     AnnualScheduleSummaryReport => {
 	data=> {
@@ -391,55 +426,68 @@ my $reports = {
 	    @aSchedules,
 	},
 	desc => 'This is the annual schedule summary report',
+	upload => 'b7162f15-4825-4b08-a247-d3bbeb1eb4a5',
     },
     BankDepositSummary => {
 	args=> "$startEnd&IncludePaidThroughSandbox=true&IncludeNotPaidThroughSandbox=true",
 	desc=> 'The Bank Deposit Summary is a breakdown of all bank deposits within a date range',
+	upload => '2b9f785b-054c-4119-99b3-a24a5debb5ef',
     },
     EnrollmentBillingReport => {
 	args=> "$startEnd&$classList",
 	desc=> 'The Enrollment Billing Report is a list of all enrolled children with details regarding how they are billed.',
+	upload => 'd633fa65-5544-41e5-b208-d252069a7312',
     },
     ExtraFeesReport => {
 	args=> "$startEnd&IncludeAutomatedFees=true&IncludeManuallyAddedFees=true",
 	desc=> 'This is a Summary of Extra Fees.',
+	upload => '71286839-c26c-42fe-b75a-0aa1185fa304',
     },
     PaymentSummaryReport => {
 	args=> "$startEnd",
 	desc=> 'The Payment Summary Report is a summary of all payments received by payment type.',
+	upload => '04ac5e07-993a-4a19-bd09-74fc587e93ba',
     },
     PaymentDetailReport => {
-	#needs invoices
-	#args=> "$startEnd&IncludePaidThroughSandbox=true&IncludeNotPaidThroughSandbox=true&
+	args=> "$startEnd&IncludePaidThroughSandbox=true&IncludeNotPaidThroughSandbox=true&PaymentTypes=cash,cc,check,other",
 	desc=> 'The Payment Detail Report is a list of all payments received within a date range',
+	upload => '3fa57a0c-90db-4710-81f4-d4d3562a97e7',
     },
     PaymentProcessingReport => {
-	args => "$startEnd&DepositDate=true",
+	args => "$startEnd&Deposit=true",
 	desc=> 'The Payment Processing Report is a summary of Payment Received',
+	upload => 'ac87e754-37ee-4c9a-a5ef-57af477b2809',
+	warn => 'Domo processing needs to be verified',
     },
     WriteOffReport => {
 	args => "$startEnd",
 	desc => 'The Write Off Report is a list of all bad debt written off within a date range',
+	upload => '2383e533-0f51-4926-8d26-b030feb1afe9',
     },
     StatementReport => {
-	args => "$startEnd&$classList",
+	# Long report, not useful format
+	#args => "$startEnd&$classList",
 	desc => 'This is the customer statement report',
     },
     DetailedStatementReportForLocation => {
-	args=> "$startEnd&$classList",
+	# Long report, not useful format
+	#args=> "$startEnd&$classList",
 	desc => 'This is the detailed customer statement report',
     },
     SubsidyReport => {
-	args => "$startEnd&$classList",
+	# No Subsidized kids here
+	#args => "$startEnd&$classList",
 	desc => 'This is the subsidy report',
     },
     MonthlySubsidyReport => {
-	args => "$asOf",
+	# No Subsidized kids here
+	#args => "$asOf",
 	desc => 'This is a Subsidy Report that shows Subsidies Estimated vs Subsidies Collected for a Month',
     },
     CustomerAgingReport => {
 	args => "$asOf",
 	desc => 'The customer aging report is a list of all customers with their Accounts Receivable Aging Summary',
+	upload => '9f40feb6-5bad-44fc-b165-478eece4d0c4',
     },
     ARCreditReport => {
 	args => "$asOf",
@@ -570,6 +618,9 @@ for my $rep (keys %$reports) {
     
     my $fname = 'data/'.lc($rep).".xls";
     my $resp;
+
+    carp 'WARN: '.$reports->{$rep}{warn} if $reports->{$rep}{warn};
+    
     if ($reports->{$rep}{data}) {
 	$reports->{$rep}{data}{Format} = 'xls';	
 	$resp = $ua->post("https://go.runsandbox.com/Report/$rep",
