@@ -7,6 +7,10 @@ use Data::Dumper;
 use LWP::UserAgent qw();
 use URI::Encode qw(uri_encode);
 
+# For HTML parsing for reports
+use HTML::TableExtract;
+use DateTime::Format::Strptime;
+
 use Time::Piece;
 
 my $ua = LWP::UserAgent->new();
@@ -31,7 +35,7 @@ my @aClassList = ('ClassList', '0,39196,39269,39270,39271');
 my @aSchedules = ('Schedules', "'','Custom','Flex','Fridays+Only','Full+Week+M-F','Mondays+Only','Three+Days+per+Week+MWF','Thursdays+Only','Tuesdays+Only','Two+Days+per+Week+TTh','Wednesdays+Only'");
 
 my $today = localtime->mdy("/");
-my $start = '8/1/2020';
+my $start = '9/8/2020';
 
 my $classList = join('=',@aClassList);
 my $asOf = "AsOfDate=$today";
@@ -530,7 +534,7 @@ my $reports = {
 	args => "$startEnd",
 	desc => 'A report displaying refunds',
     },
-    OutstandingInvoicesReport => {
+    OutstandingInvoices => {
 	data => {
 	    PaymentTypes => 'cash,cc,check,other',
 	    PaymentIntervals => '2month,2weeks,month,week',
@@ -540,6 +544,8 @@ my $reports = {
 	    OrderBy => 'invoicenumber',
 	},
 	desc => 'The Invoices Report is a list of all invoices',
+	upload => '73f452fe-8e05-49d0-8421-986218f79138',
+	
     },
     ExpectedInvoices => {
 	data => {
@@ -588,6 +594,12 @@ my $reports = {
 	args => "$startEnd",
 	desc => 'The Company Expected Invoices Report is the total expected invoices for each location',
     },
+    HTML_AttendanceOverview => {
+	url => 'https://go.runsandbox.com/Attendance?AttendanceDate=$date',
+	table_headers => [ 'Class', 'Scheduled', 'Attended', 'Sick', 'Vacation', 'Other'],
+	upload => '0bfcc94d-ce77-44d9-b460-df31c1a117f0',
+    },
+	    
 };
 
 # Convert ARGV into a hashmap of reports to run. If it's empty, we run all reports
@@ -620,8 +632,37 @@ for my $rep (keys %$reports) {
     my $resp;
 
     carp 'WARN: '.$reports->{$rep}{warn} if $reports->{$rep}{warn};
-    
-    if ($reports->{$rep}{data}) {
+
+    if ($reports->{$rep}{url}) {
+	my $df = DateTime::Format::Strptime->new(pattern=>'%D');
+	my $date = $df->parse_datetime($start);
+	my $endDate = $df->parse_datetime($today);
+	$fname = 'data/'.lc($rep).'.csv';
+	
+	open(my $csvOut, ">", $fname) or die "Cannot open $fname for writing: $!";
+	print $csvOut "date,class,scheduled,attended,sick,vacation,other\n";
+	while (DateTime->compare($date,$endDate) <= 0) {
+	    my $url = $reports->{$rep}{url};
+	    my $formatted = $date->mdy();
+	    $url =~ s/\$date/$formatted/;
+	    #carp 'Getting URL :'. $url;
+	    $resp = $ua->get($url,
+			     Cookie=>$authCookie);
+	    my $te = HTML::TableExtract->new( headers => $reports->{$rep}{table_headers});
+	    $te->parse($resp->content);
+	    if (!$te->tables) {
+		carp "No tables detected in ".$reports->{$rep}{url};
+	    } 
+	    foreach my $ts ($te->tables) {
+		foreach my $row ($ts->rows) {
+		    s/^-$/0/ for @$row;
+		    print $csvOut $date->mdy('/'), ",", join(',', @$row), "\n";
+		}
+	    }
+	    $date->add( days=>1 );
+	}
+	close $csvOut;
+    } elsif ($reports->{$rep}{data}) {
 	$reports->{$rep}{data}{Format} = 'xls';	
 	$resp = $ua->post("https://go.runsandbox.com/Report/$rep",
 			  Content => $reports->{$rep}{data},
