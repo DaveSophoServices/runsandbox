@@ -15,10 +15,15 @@ use Time::Piece;
 
 my $ua = LWP::UserAgent->new();
 
+my $config_file = 'config';
+open (my $CONFIG, "<", $config_file) or die "Cannot open config file. Will contain two lines. Line 1 is your username, Line 2 your password";
+chomp(my $username = <$CONFIG>);
+chomp(my $password = <$CONFIG>);
+close $CONFIG;
 my $resp = $ua->post("https://go.runsandbox.com/Account/LogOn?ReturnURL=/",
 		    Content=>{
-			UserName=>'david@thousandpines.com',
-			Password=>'RqqQ28cxdc5D5uhvZYo2',
+			UserName=>$username,
+			Password=>$password,
 			RememberMe=>"false"});
 my @cookies = $resp->header('Set-Cookie');
 my $authCookie;
@@ -28,6 +33,9 @@ for my $c (@cookies) {
 	carp 'Auth Cookie: '.$authCookie;
     }
     # carp 'Cookies: ' . $c;	
+}
+if (!$authCookie) {
+    die "No cookie set after authentication. Wrong username/password?";
 }
 
 carp 'Resp: ' . $resp->status_line if ($resp->code() != 302);
