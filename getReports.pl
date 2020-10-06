@@ -45,60 +45,63 @@ my @aSchedules = ('Schedules', "'','Custom','Flex','Fridays+Only','Full+Week+M-F
 my $today = localtime->mdy("/");
 my $start = '9/8/2020';
 
+my $df = DateTime::Format::Strptime->new(pattern=>'%D');
 my $classList = join('=',@aClassList);
 my $asOf = "AsOfDate=$today";
 my $startDate = "StartDate=$start";
+my $startDateTime = $df->parse_datetime($start);
 my $endDate = "EndDate=$today";
+my $endDateTime = $df->parse_datetime($today);
 my $startEnd = "$startDate&$endDate";
 
 my $reports = {
-    AllergyReport => {
-	args => "$asOf&IncludeMedical=true&$classList",
-	desc => 'The allergy list is a list of all children with allergies with one page per class.',
-	upload => 'aec710d2-3639-4c3b-918c-fbe1eebc4911',
-    },
-    AllergyReportDetailed => {
-	args => "$asOf&$classList",
-	desc => 'The allergy list is a list of all children with allergies including the parents contact information.',
-	upload => '1100b738-e454-4ed5-83c3-d494667c31a3',
-    },
-    AllergyReportCombined => {
-	args => "$asOf&Includemedical=true&$classList",
-	desc => 'The allergy list is a list of all children with allergies combined for all classes.',
-	upload => '1198ea89-22f9-493a-a915-2c3da568025a',
-    },
-    AllergyReportLandscape => {
-	args => "$asOf&$classList",
-	desc => 'The allergy list is a list of all children with allergies with one page per class.',
-	upload => '33982376-a49f-4a8a-b069-0aac2879f09d',
-    },
-    AllergyReportLandscapeCombined => {
-	args => "$asOf&$classList",
-	desc => 'The allergy list is a list of all children with allergies combined for all classes.',
-	upload => '6a986b57-3e0b-4f18-aae1-acd452dbdeac',
-    },
-    AllergyReportLandscapeWithRequirements => {
-	args => "$asOf&$classList",
-	desc => 'The Allergy list is a list of all children with allergies, medical conditions, or Requirements.',
-	upload => '43c5db80-ec65-4308-9243-a82ab7e69550',
+#    AllergyReport => {
+#	args => "$asOf&IncludeMedical=true&$classList",
+#	desc => 'The allergy list is a list of all children with allergies with one page per class.',
+#	upload => 'aec710d2-3639-4c3b-918c-fbe1eebc4911',
+#    },
+#    AllergyReportDetailed => {
+#	args => "$asOf&$classList",
+	# desc => 'The allergy list is a list of all children with allergies including the parents contact information.',
+	# upload => '1100b738-e454-4ed5-83c3-d494667c31a3',
+    # },
+    # AllergyReportCombined => {
+    # 	args => "$asOf&Includemedical=true&$classList",
+    # 	desc => 'The allergy list is a list of all children with allergies combined for all classes.',
+    # 	upload => '1198ea89-22f9-493a-a915-2c3da568025a',
+    # },
+    # AllergyReportLandscape => {
+    # 	args => "$asOf&$classList",
+    # 	desc => 'The allergy list is a list of all children with allergies with one page per class.',
+    # 	upload => '33982376-a49f-4a8a-b069-0aac2879f09d',
+    # },
+    # AllergyReportLandscapeCombined => {
+    # 	args => "$asOf&$classList",
+    # 	desc => 'The allergy list is a list of all children with allergies combined for all classes.',
+    # 	upload => '6a986b57-3e0b-4f18-aae1-acd452dbdeac',
+    # },
+    # AllergyReportLandscapeWithRequirements => {
+    # 	args => "$asOf&$classList",
+    # 	desc => 'The Allergy list is a list of all children with allergies, medical conditions, or Requirements.',
+    # 	upload => '43c5db80-ec65-4308-9243-a82ab7e69550',
 	
-    },
-    EmergencyCardReport => {
-	# not an easy XLS to take care of
-	args => "$asOf&Condensed=true&$classList",
-	desc => q/The emergency card is a list of all children's emergency contact informations/,
-	upload => '3ddfc135-6c4b-4474-80d8-bf097201fa2a',
-    },
+    # },
+    # EmergencyCardReport => {
+    # 	# not an easy XLS to take care of
+    # 	args => "$asOf&Condensed=true&$classList",
+    # 	desc => q/The emergency card is a list of all children's emergency contact informations/,
+    # 	upload => '3ddfc135-6c4b-4474-80d8-bf097201fa2a',
+    # },
     EnrollmentReport => {
 	args => "$asOf&$classList&OrderBy=alphabetical&GroupBy=class",
 	desc => 'This is a list of the new enrollment for the classes',
 	upload => 'b141c070-792e-4899-8058-6b7f7ef0c1f9',
     },
-    BirthdayReport => {
-	args => "$startEnd&$classList&AllBirthdays=true",
-	desc => 'The Birthday Report is a list of all enrolled children that have a birthday within the selected date range.',
-	upload => '1e063d3c-58bd-4ddc-aea0-6588f29db173',
-    },
+    # BirthdayReport => {
+    # 	args => "$startEnd&$classList&AllBirthdays=true",
+    # 	desc => 'The Birthday Report is a list of all enrolled children that have a birthday within the selected date range.',
+    # 	upload => '1e063d3c-58bd-4ddc-aea0-6588f29db173',
+    # },
     WithdrawalReport => {
 	args => "$startEnd&$classList",
 	desc => 'This is a list of the Withdrawals for the classes',
@@ -605,18 +608,70 @@ my $reports = {
     HTML_AttendanceOverview => {
 	url => 'https://go.runsandbox.com/Attendance?AttendanceDate=$date',
 	table_headers => [ 'Class', 'Scheduled', 'Attended', 'Sick', 'Vacation', 'Other'],
+	csv_headers => "date,class,scheduled,attended,sick,vacation,other",
 	upload => '0bfcc94d-ce77-44d9-b460-df31c1a117f0',
-    },
+	iter => sub {
+	    my $rep = shift;
+	    my $func = shift;
 	    
+	    my $date = $startDateTime->clone;
+	    my $print = sub { return [$date->mdy('/'), @_ ]; };
+	    while(DateTime->compare($date,$endDateTime) <= 0) {
+		my $url = $rep->{url};
+		my $formatted = $date->mdy();
+		$url =~ s/\$date/$formatted/;
+		&$func($url, $print);
+		$date->add( days=>1 );
+	    }
+	},
+    },
+    HTML_Invoices => {
+	url => 'https://go.runsandbox.com/Billing/Invoices?pagenumber=$page',
+	table_headers => ['Invoice #', 'Payer', 'Date', 'Pmt Type', 'Amount Due', 'Total', 'Status'],
+	csv_headers => "inv num,payer,date,pmy type,amount due,total,status",
+	iter => sub {
+	    my ($rep, $func) = @_;
+	    my $page = 1;
+	    my $status = 1;
+	    my $df_dmy = DateTime::Format::Strptime->new(pattern=>'%d-%b-%y');
+	    my $print = sub {
+		## trim the whitespace
+		map { $_ =~ s/^\s+|\s+$//g } @_;
+		## quote the second field - payer
+		$_[1] = qq/"$_[1]"/;
+		## fix date
+		my $d = $df_dmy->parse_datetime($_[2]);
+		$_[2] = $d->mdy('/');
+		## remove $ sign and , from money
+		$_[4] =~ s/^\$|,//g;
+		$_[5] =~ s/^\$|,//g;
+		#print join(', ', @_), "\n";
+		[@_];
+	    };
+	    while($status) {
+		my $url = $rep->{url};
+		$url =~ s/\$page/$page/;
+		$status = &$func($url, $print);
+		$page++;
+	    }
+	},
+	upload => "8787d73f-c00a-4959-adad-1dbd6d6a599f",
+    }
 };
 
 # Convert ARGV into a hashmap of reports to run. If it's empty, we run all reports
 my %reps_to_run = map { $_ => 1 } @ARGV;
 
 my $debug = 0;
+my $do_not_upload = 0;
 if ($reps_to_run{debug}) {
     $debug = 1;
     delete $reps_to_run{debug};
+}
+
+if ($reps_to_run{do_not_upload}) {
+    $do_not_upload = 1;
+    delete $reps_to_run{do_not_upload};
 }
 
 $ua->add_handler(request_send => sub {
@@ -635,40 +690,45 @@ for my $rep (keys %$reports) {
     if (%reps_to_run && !$reps_to_run{$rep}) {
 	next;
     } 
-    
+
+    print $rep."\n";
     my $fname = 'data/'.lc($rep).".xls";
     my $resp;
 
     carp 'WARN: '.$reports->{$rep}{warn} if $reports->{$rep}{warn};
 
     if ($reports->{$rep}{url}) {
-	my $df = DateTime::Format::Strptime->new(pattern=>'%D');
-	my $date = $df->parse_datetime($start);
-	my $endDate = $df->parse_datetime($today);
 	$fname = 'data/'.lc($rep).'.csv';
 	
 	open(my $csvOut, ">", $fname) or die "Cannot open $fname for writing: $!";
-	print $csvOut "date,class,scheduled,attended,sick,vacation,other\n";
-	while (DateTime->compare($date,$endDate) <= 0) {
-	    my $url = $reports->{$rep}{url};
-	    my $formatted = $date->mdy();
-	    $url =~ s/\$date/$formatted/;
-	    #carp 'Getting URL :'. $url;
-	    $resp = $ua->get($url,
-			     Cookie=>$authCookie);
-	    my $te = HTML::TableExtract->new( headers => $reports->{$rep}{table_headers});
-	    $te->parse($resp->content);
-	    if (!$te->tables) {
-		carp "No tables detected in ".$reports->{$rep}{url};
-	    } 
-	    foreach my $ts ($te->tables) {
-		foreach my $row ($ts->rows) {
-		    s/^-$/0/ for @$row;
-		    print $csvOut $date->mdy('/'), ",", join(',', @$row), "\n";
+	print $csvOut $reports->{$rep}{csv_headers}."\n";
+	## Call the iterate function with my subroutine
+	$reports->{$rep}{iter}(
+	    $reports->{$rep},
+	    sub {
+		my $url = shift;
+		my $print = shift;
+		
+		#carp 'Getting URL :'. $url;
+		$resp = $ua->get($url,
+				 Cookie=>$authCookie);
+		my $te = HTML::TableExtract->new( headers => $reports->{$rep}{table_headers});
+		$te->parse($resp->content);
+		if (!$te->tables) {
+		    carp "No tables detected in ".$reports->{$rep}{url};
 		}
-	    }
-	    $date->add( days=>1 );
-	}
+		my $rowCount = 0;
+		foreach my $ts ($te->tables) {
+		    foreach my $row ($ts->rows) {
+			s/^-$/0/ for @$row;
+			my $r = &{$print}(@$row);
+			print $csvOut join(',',@$r)."\n";
+			$rowCount ++;
+		    }
+		}
+		return $rowCount;
+	    });
+	
 	close $csvOut;
     } elsif ($reports->{$rep}{data}) {
 	$reports->{$rep}{data}{Format} = 'xls';	
@@ -683,7 +743,7 @@ for my $rep (keys %$reports) {
 			 Cookie=>$authCookie,
 			 ':content_file'=> $fname);
     }
-    if ($resp) {
+    if ($resp && !$do_not_upload) {
 	carp "$rep: ".$resp->status_line;
 	if ($resp->code() == 200) {
 	    # upload it
