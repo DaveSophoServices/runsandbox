@@ -112,30 +112,29 @@ my $reports = {
 	desc => 'This is a list of the children on waiting list for the classes',
 	upload => 'b5a99431-c607-477e-8913-e062f4540b93',
     },
-    ChildrenImmunizationsReport => {
-	# not a straight list of values. More of a report card
-	args => "$asOf&$classList",
-	desc => q/This is a list of the children's Immunization informations for the classes/,
-	upload => '9ecf7572-6620-425f-a98b-d2b7be7fc80b',
-    },
-    WeeklyMedicationReport => {
-	# not a straight list of values.
-	args => "$classList",
-	desc => q/This is a list of the children's Weekly Medication informations for the classes/,
-	upload => '3bb5b72b-c38a-4c6f-9a79-2994d658a73e',
+    # ChildrenImmunizationsReport => {
+    # 	# not a straight list of values. More of a report card
+    # 	args => "$asOf&$classList",
+    # 	desc => q/This is a list of the children's Immunization informations for the classes/,
+    # 	upload => '9ecf7572-6620-425f-a98b-d2b7be7fc80b',
+    # },
+    # WeeklyMedicationReport => {
+    # 	# not a straight list of values.
+    # 	args => "$classList",
+    # 	desc => q/This is a list of the children's Weekly Medication informations for the classes/,
+    # 	upload => '3bb5b72b-c38a-4c6f-9a79-2994d658a73e',
 	
-    },
+    # },
     ParentInfoList => {
 	args => "$asOf&$classList",
 	desc => q/This is a list of the children's Parents and Guardians' information for the classes/,
 	upload => '7a4ba3f8-5331-4be6-9f01-fed7285bb7be',
     },
-    ParentPortalAdoption => {
-	# requires a different method of loading this one
-	#args => "",
-	desc => 'A report of how many parents have successfully signed up for Parent Portal',
-	upload => '38bab3c9-83af-4fc5-b9cf-9168df6f3fbf',
-    },
+    # ParentPortalAdoption => {
+    # 	# requires a different method of loading this one
+    # 	#args => "",
+    # 	desc => 'A report of how many parents have successfully signed up for Parent Portal',
+    # },
     ChildList => {
 	data => {
 	    AsOfDate => $today,
@@ -163,12 +162,12 @@ my $reports = {
     StaffTrackingReport => { # needs reminders, tasks to be setup
 	desc => 'The Staff Tracking Report is a list of outstanding or complete staff reminders',
     },
-    PickupList => {
-	args => "$asOf&$classList",
-	desc => q/This is a list of each child's authorized pickups for the classes selected/,
-	upload => 'af7ed067-7299-4c96-8b70-efed03e4a9ef',
+    # PickupList => {
+    # 	args => "$asOf&$classList",
+    # 	desc => q/This is a list of each child's authorized pickups for the classes selected/,
+    # 	upload => 'af7ed067-7299-4c96-8b70-efed03e4a9ef',
 	
-    },
+    # },
     ChildTagsReports => { # needs child tags to be setup
 	desc => 'This is a list children and their associated tags',
     },
@@ -179,7 +178,6 @@ my $reports = {
 	# No daily activities setup
 	#args => "$asOf&$classList",
 	desc => 'This is a daily log of the activities/checklist for each child',
-	upload => 'f023ea8e-4864-4572-9cd2-bd22da50c30a',
     },
     SummerCampEnrollmentReport => {
 	# needs kids to be enrolled at this location
@@ -202,103 +200,95 @@ my $reports = {
 	# need staff
 	desc => 'The staff Timesheet is a list of all staff\'s Hours for the given period',
     },
-    RequirementsReport => {
-	args => "$asOf&$classList",
-	desc => 'The Requirements Report is a list of all children with requirements with one page per class.',
-	upload => '262ccfa2-1d2b-4975-9c15-0f0bb263078a',
-    },
-    TimeclockPassCodeReport => {
-	args => "",
-	desc => 'A Report of all guardian and emergency contact timeclock pass codes',
-	upload => 'f788c7b3-9e53-4d0f-ae44-db8e85a02587',
-    },
+    # RequirementsReport => {
+    # 	args => "$asOf&$classList",
+    # 	desc => 'The Requirements Report is a list of all children with requirements with one page per class.',
+    # 	upload => '262ccfa2-1d2b-4975-9c15-0f0bb263078a',
+    # },
+    # TimeclockPassCodeReport => {
+    # 	args => "",
+    # 	desc => 'A Report of all guardian and emergency contact timeclock pass codes',
+    # 	upload => 'f788c7b3-9e53-4d0f-ae44-db8e85a02587',
+    # },
     
     ## Attendance Reports
-    AttendanceSummary => {
-	#args => "$startEnd&$classList",
-	desc => 'This is the Attendance Summary',
-	upload => '02668b13-a6d9-4700-956c-51bc0465f8a2',
-    },
+    # AttendanceSummary => {
+    # 	#args => "$startEnd&$classList",
+    # 	desc => 'This is the Attendance Summary',
+    # 	upload => '02668b13-a6d9-4700-956c-51bc0465f8a2',
+    # },
     DailyAttendanceReport => {
 	# Sheet
 	#args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet',
-	upload => 'e18b6f3c-bca6-407a-8718-64acffb9ce51',
     },
     DailyAttendanceProjectionReport => {
 	# Sheet
 	#args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet with only scheduled children appearing on the report',
-	upload => 'ee7789f1-a9b1-4bab-9f83-1ab9e000b689',
     },
     DailyAttendanceFirstName => {
 	# Sheet
 	#args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet with the first name and initial showing on the report',
-	upload => '242d25f7-f0cc-4ed6-a0d7-0917422fcb93',
     },
     DailyAttendanceSheetSignature => {
 	# Sheet
 	#args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet with Signature and Non-Scheduled Children greyed out',
-	upload => 'eea2ea51-e808-481d-adae-aea0cd09c02a',
     },
     DailyAttendanceSignatureAll => {
 	# Sheet
 	#args => "$asOf&$classList&GroupByClass=true",
 	desc => 'This is the Daily Attendance Sheet with Signature',
-	upload => '5399ef83-6994-4fd7-ab4b-e472e0b255cd',
     },
     DailyAttendanceSignature => {
 	# Sheet
 	#args => "$asOf&$classList&GroupByClass=true",
 	desc => 'This is the Daily Attendance Sheet with Signature with only scheduled children appearing on the report',
-	upload => 'd7215639-20dd-40cc-bcff-2dda51f2fee7',
     },
     DailyAttendanceHealthCheck => {
 	# Sheet
  	#args => "$asOf&$classList",
 	desc => 'This is the Daily Attendance Sheet with the ability to enter health check information',
-	upload => '649180fe-1c10-4df3-962c-01df107d0470',
     },
     DailyAttendanceReportHours => {	
 	args => "$startEnd&$classList",
 	desc => 'This is the Daily Attendance Report with Times',
 	upload => '2b655e03-d035-4ade-bcae-9e7cd3469322',
     },
-    WeeklyAttendanceReport => {
-	# Sheet
-	#args => "$asOf&$classList",
-	desc => 'This is the Weekly Attendance Report',
-	upload => 'ad7fc665-c303-4cdc-b6d6-ac83758e443c',
-    },
-    WeeklyAttendanceReportDouble => {
-	# Sheet
-	#args => "$asOf&$classList",
-	desc => 'This is the Weekly Attendance Report Double',
-	upload => 'a4afc770-7751-4b16-93b7-2870db9a24b8',
-    },
-    WeeklyAttendanceReportTriple => {
-	# Sheet
-	#args => "$asOf&$classList",
-	desc => 'This is the Weekly Attendance Report Triple',
-	upload => 'fbcc2a2e-55a5-4169-9ca0-75e6258a61ab',
-    },
-    WeeklyAttendanceProjectionReport => {
-	args => "$asOf&$classList",
-	desc => 'This is the weekly attendance projection report',
-	upload => '824eed33-80ea-4a71-b2b2-c548fa20059f',
-    },
-    WeeklyAttendanceProjectionReportDouble => {
-	# Sheet
-	#args=> "$asOf&$classList",
-	desc => 'This is the weekly attendace projection report with double.',
-    },
-    WeeklyAttendanceHoursReport => {
-	args=> "$asOf&$classList",
-	desc=> 'This is the weekly attendance projection report with times',
-	upload => '0da02f00-ef43-42db-8e35-1f08064f87af',
-    },
+    # WeeklyAttendanceReport => {
+    # 	# Sheet
+    # 	#args => "$asOf&$classList",
+    # 	desc => 'This is the Weekly Attendance Report',
+    # 	upload => 'ad7fc665-c303-4cdc-b6d6-ac83758e443c',
+    # },
+    # WeeklyAttendanceReportDouble => {
+    # 	# Sheet
+    # 	#args => "$asOf&$classList",
+    # 	desc => 'This is the Weekly Attendance Report Double',
+    # },
+    # WeeklyAttendanceReportTriple => {
+    # 	# Sheet
+    # 	#args => "$asOf&$classList",
+    # 	desc => 'This is the Weekly Attendance Report Triple',
+
+    # },
+    # WeeklyAttendanceProjectionReport => {
+    # 	args => "$asOf&$classList",
+    # 	desc => 'This is the weekly attendance projection report',
+    # 	upload => '824eed33-80ea-4a71-b2b2-c548fa20059f',
+    # },
+    # WeeklyAttendanceProjectionReportDouble => {
+    # 	# Sheet
+    # 	#args=> "$asOf&$classList",
+    # 	desc => 'This is the weekly attendace projection report with double.',
+    # },
+    # WeeklyAttendanceHoursReport => {
+    # 	args=> "$asOf&$classList",
+    # 	desc=> 'This is the weekly attendance projection report with times',
+    # 	upload => '0da02f00-ef43-42db-8e35-1f08064f87af',
+    # },
     WeeklySignInSheet => {
 	# Sheet
 	#args=> "$asOf&classList",
@@ -404,21 +394,21 @@ my $reports = {
 	desc=> 'This is the monthly projection report',
 	upload => 'ace8bcbf-34a4-4bb4-8867-49a979224690',
     },
-    WeeklyProjectionReport => {
-	args=> "$asOf&$classList",
-	desc=> 'This is the weekly projection report',
-	upload => '2d54489e-deb2-446e-b537-f7c66e4322f5',
-    },
-    WeeklyScheduledTimesReport => {
-	args=> "$asOf&$classList",
-	desc=> 'This is the Weekly Projection Report With Times',
-	upload => '3698c993-71cb-4998-941e-01e75bacd912',
-    },
-    WeeklyProjectionSummaryReport => {
-	args=> "$asOf",
-	desc=> 'This is the weekly projection summary report',
-	upload => '7e0dde89-c4b1-4bd9-9dee-f1319106424f',
-    },
+    # WeeklyProjectionReport => {
+    # 	args=> "$asOf&$classList",
+    # 	desc=> 'This is the weekly projection report',
+    # 	upload => '2d54489e-deb2-446e-b537-f7c66e4322f5',
+    # },
+    # WeeklyScheduledTimesReport => {
+    # 	args=> "$asOf&$classList",
+    # 	desc=> 'This is the Weekly Projection Report With Times',
+    # 	upload => '3698c993-71cb-4998-941e-01e75bacd912',
+    # },
+    # WeeklyProjectionSummaryReport => {
+    # 	args=> "$asOf",
+    # 	desc=> 'This is the weekly projection summary report',
+    # 	upload => '7e0dde89-c4b1-4bd9-9dee-f1319106424f',
+    # },
     CampProjection => {
 	# need to have kids enrolled in camp
 	desc=> 'This is the weekly projection report for summer camps',
@@ -545,19 +535,19 @@ my $reports = {
 	args => "$startEnd",
 	desc => 'A report displaying refunds',
     },
-    OutstandingInvoices => {
-	data => {
-	    PaymentTypes => 'cash,cc,check,other',
-	    PaymentIntervals => '2month,2weeks,month,week',
-	    Status => '{"Unpaid":true,"Paid":true,"Pending":true,"NotEmailed":true,"Emailed":true,"Unprinted":true,"Printed":true}',
-	    StartDate => $start,
-	    EndDate => $today,
-	    OrderBy => 'invoicenumber',
-	},
-	desc => 'The Invoices Report is a list of all invoices',
-	upload => '73f452fe-8e05-49d0-8421-986218f79138',
+    # OutstandingInvoices => {
+    # 	data => {
+    # 	    PaymentTypes => 'cash,cc,check,other',
+    # 	    PaymentIntervals => '2month,2weeks,month,week',
+    # 	    Status => '{"Unpaid":true,"Paid":true,"Pending":true,"NotEmailed":true,"Emailed":true,"Unprinted":true,"Printed":true}',
+    # 	    StartDate => $start,
+    # 	    EndDate => $today,
+    # 	    OrderBy => 'invoicenumber',
+    # 	},
+    # 	desc => 'The Invoices Report is a list of all invoices',
+    # 	upload => '73f452fe-8e05-49d0-8421-986218f79138',
 	
-    },
+    # },
     ExpectedInvoices => {
 	data => {
 	    PaymentIntervals => '2month,2weeks,month,week',
