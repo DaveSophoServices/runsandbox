@@ -30,7 +30,7 @@ my $authCookie;
 for my $c (@cookies) {
     if ($c =~ /(a_sandbox\=[^;]+);/) {
 	$authCookie = $1;
-	carp 'Auth Cookie: '.$authCookie;
+	print 'Auth Cookie: '.$authCookie;
     }
     # carp 'Cookies: ' . $c;	
 }
@@ -40,7 +40,7 @@ if (!$authCookie) {
 
 carp 'Resp: ' . $resp->status_line if ($resp->code() != 302);
 my @aClassList = ('ClassList', '0,39196,39269,39270,39271');
-my @aSchedules = ('Schedules', "'','Custom','Flex','Fridays+Only','Full+Week+M-F','Mondays+Only','Three+Days+per+Week+MWF','Thursdays+Only','Tuesdays+Only','Two+Days+per+Week+TTh','Wednesdays+Only'");
+my @aSchedules = ('Schedules', "'','Custom','Flex','Fridays+Only','Full+Week+M-F','Mondays+Only','PE+Only','Three+Days+per+Week+MWF','Thursdays+Only','Tuesdays+Only','Two+Days+per+Week+TTh','Wednesdays+Only'");
 
 my $today = localtime->mdy("/");
 my $start = '9/8/2020';
@@ -734,15 +734,15 @@ for my $rep (keys %$reports) {
 			 ':content_file'=> $fname);
     }
     if ($resp && !$do_not_upload) {
-	carp "$rep: ".$resp->status_line;
 	if ($resp->code() == 200) {
 	    # upload it
 	    if (my $target=$reports->{$rep}{upload}) {
 		my $a = `scp $fname thousandpines\@tmcamping.import.domo.com:$target`;
-		carp "Upload failed to $target\n$a" if $?;
+		carp "Upload failed to $target\n$rep -> $a" if $?;
 		carp $a if $debug && $a;
 	    }
 	} else {
+	    carp "$rep: ".$resp->status_line;
 	    if (!$debug) {
 		carp "Failed URL: ".$resp->request->uri;
 	    } else {
@@ -750,6 +750,6 @@ for my $rep (keys %$reports) {
 	    }
 	}
     } else {
-	carp "No report run for $rep"
+	print "No report run for $rep"
     }
 }
